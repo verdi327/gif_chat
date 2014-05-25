@@ -3,7 +3,7 @@ class Api::V1::ConversationsController < ApplicationController
 
   def index
     user = User.find(params[:user_id])
-    @conversations = user.conversations
+    @conversations = user.active_conversations
   end
 
   def create
@@ -19,5 +19,16 @@ class Api::V1::ConversationsController < ApplicationController
     end
 
     render json: {message: "success", conversation_id: conversation.id}
+  end
+
+  def destroy
+    # params: id(conversation_id) and user_id
+    participant = Participant.where(user_id: params[:user_id], conversation_id: params[:id]).first
+    if participant
+      participant.soft_delete
+      render json: {message: "success"}
+    else
+      render json: {message: "unable to find participant with given conversation_id or user_id"}
+    end
   end
 end
