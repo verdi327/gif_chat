@@ -3,6 +3,8 @@ ruby "2.0.0"
 
 gem "rabl"
 gem "oj"
+gem "gifster"
+gem "faraday"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
